@@ -3,6 +3,12 @@ package com.me.nav.vvo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.Spinner
+import androidx.constraintlayout.widget.ConstraintLayout
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
@@ -17,11 +23,66 @@ class MainActivity : AppCompatActivity() {
 
     private val DEPARTURE : Int = 0
     private val ARRIVAL : Int = 1
+
+    var datesArray = arrayOf("Вчера", "Сегодня", "Завтра")
+    var currentDateVar = 0
+
+    var typesArray = arrayOf("Вылет", "Прилёт")
+    var currentTypeVar = 0
+
     override fun onCreate (savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setListViewContent(ARRIVAL, TOMORROW)
+        val spinnerDates = findViewById<Spinner>(R.id.spinner_dates)
+        val spinnerTypes = findViewById<Spinner>(R.id.spinner_flightTypes)
+
+        setListViewContent(currentTypeVar, currentDateVar)
+
+        val adapterDates = ArrayAdapter(this, android.R.layout.simple_spinner_item, datesArray)
+        adapterDates.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerDates.adapter = adapterDates
+        spinnerDates.setSelection(currentDateVar)
+
+        val adapterTypes = ArrayAdapter(this, android.R.layout.simple_spinner_item, typesArray)
+        adapterTypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerTypes.adapter = adapterTypes
+        spinnerTypes.setSelection(currentTypeVar)
+
+        val itemSelectedListenerDates: AdapterView.OnItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    setFrameLayoutContent(0, 1)
+                    currentDateVar = position
+                    setListViewContent(currentTypeVar, currentDateVar)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        spinnerDates.onItemSelectedListener = itemSelectedListenerDates
+
+        val itemSelectedListenerTypes: AdapterView.OnItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    setFrameLayoutContent(0, 1)
+                    currentTypeVar = position
+                    setListViewContent(currentTypeVar, currentDateVar)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        spinnerTypes.onItemSelectedListener = itemSelectedListenerTypes
+
     }
 
     private fun setListViewContent (
@@ -68,10 +129,31 @@ class MainActivity : AppCompatActivity() {
                         val jsonString = response.body!!.string()
                         //here we can work with result
                         Log.e("b3", jsonString)
+                        runOnUiThread {
+                            setFrameLayoutContent(1, 0)
+                        }
                     }
                 }
             }
         )
 
+    }
+
+    private fun setFrameLayoutContent (
+        list: Int = 1,
+        loading: Int = 0
+    ) {
+        val listView = findViewById<ListView>(R.id.flightList)
+        val loadingLayout = findViewById<ConstraintLayout>(R.id.loading_layout)
+
+        when (list) {
+            0 -> listView.visibility = View.GONE
+            1 -> listView.visibility = View.VISIBLE
+        }
+
+        when (loading) {
+            0 -> loadingLayout.visibility = View.GONE
+            1 -> loadingLayout.visibility = View.VISIBLE
+        }
     }
 }
