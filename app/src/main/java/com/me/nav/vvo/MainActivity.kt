@@ -3,6 +3,10 @@ package com.me.nav.vvo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
@@ -17,9 +21,61 @@ class MainActivity : AppCompatActivity() {
 
     private val DEPARTURE : Int = 0
     private val ARRIVAL : Int = 1
+
+    var datesArray = arrayOf("Вчера", "Сегодня", "Завтра")
+    var currentDateVar = 0
+
+    var typesArray = arrayOf("Вылет", "Прилёт")
+    var currentTypeVar = 0
+
     override fun onCreate (savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val spinnerDates = findViewById<Spinner>(R.id.spinner_dates)
+        val spinnerTypes = findViewById<Spinner>(R.id.spinner_flightTypes)
+
+        val adapterDates = ArrayAdapter(this, android.R.layout.simple_spinner_item, datesArray)
+        adapterDates.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerDates.adapter = adapterDates
+        spinnerDates.setSelection(currentDateVar)
+
+        val adapterTypes = ArrayAdapter(this, android.R.layout.simple_spinner_item, typesArray)
+        adapterTypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerTypes.adapter = adapterTypes
+        spinnerTypes.setSelection(currentTypeVar)
+
+        val itemSelectedListenerDates: AdapterView.OnItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    currentDateVar = position
+                    setListViewContent(currentTypeVar, currentDateVar)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        spinnerDates.onItemSelectedListener = itemSelectedListenerDates
+
+        val itemSelectedListenerTypes: AdapterView.OnItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View,
+                    position: Int,
+                    id: Long
+                ) {
+                    currentTypeVar = position
+                    setListViewContent(currentTypeVar, currentDateVar)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        spinnerTypes.onItemSelectedListener = itemSelectedListenerTypes
 
         setListViewContent(ARRIVAL, TOMORROW)
     }
