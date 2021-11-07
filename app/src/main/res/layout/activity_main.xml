@@ -92,7 +92,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/wifi_err_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/errorText"
@@ -140,7 +141,7 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recyclerView_flightList"
+            android:id="@+id/flightList"
             android:background="@color/gray" />
 
     </FrameLayout>
