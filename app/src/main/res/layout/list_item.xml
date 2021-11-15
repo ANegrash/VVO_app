@@ -22,7 +22,7 @@
             android:layout_marginBottom="5dp">
 
             <TextView
-                android:id="@+id/textView_listTime"
+                android:id="@+id/itemTime"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/number"
@@ -59,25 +59,25 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView_listCity"
+                        android:id="@+id/itemCity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/russian"
-                        android:text="Направление"
+                        android:text="City"
                         android:textColor="@color/textColor"
                         android:textSize="16sp" />
 
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/textView_listStatus"
+                    android:id="@+id/itemStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="2dp"
                     android:fontFamily="@font/russian"
-                    android:text="Статус рейса"
+                    android:text="Status"
                     android:textColor="@color/secondary" />
 
             </LinearLayout>
@@ -87,7 +87,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/textView_listFlightNumber"
+                    android:id="@+id/itemFlightNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/number"
