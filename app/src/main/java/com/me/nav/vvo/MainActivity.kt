@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                setFrameLayoutContent(0, 1)
+                setFrameLayoutContent(0, 1, 0)
                 currentDateVar = position
                 setListViewContent(currentTypeVar, currentDateVar)
             }
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                setFrameLayoutContent(0, 1)
+                setFrameLayoutContent(0, 1, 0)
                 currentTypeVar = position
                 setListViewContent(currentTypeVar, currentDateVar)
             }
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
         spinnerTypes.onItemSelectedListener = itemSelectedListenerTypes
 
         reloadButton.setOnClickListener {
-            setFrameLayoutContent(0, 1)
+            setFrameLayoutContent(0, 1, 0)
             setListViewContent(currentTypeVar, currentDateVar)
         }
 
@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity() {
             object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     runOnUiThread {
-                        //here will be error check
+                        setFrameLayoutContent(0, 0, 1)
                     }
                 }
 
@@ -174,11 +174,11 @@ class MainActivity : AppCompatActivity() {
                                         startActivity(intent)
                                     }
                                 }
-                            setFrameLayoutContent(1, 0)
+                            setFrameLayoutContent(1, 0, 0)
                         }
                     } else {
                         runOnUiThread {
-                            setFrameLayoutContent(0, 1)
+                            setFrameLayoutContent(0, 0, 1)
                         }
                     }
                 }
@@ -188,10 +188,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun setFrameLayoutContent (
         list: Int = 1,
-        loading: Int = 0
+        loading: Int = 0,
+        error: Int = 0
     ) {
         val listView = findViewById<ListView>(R.id.flightList)
         val loadingLayout = findViewById<ConstraintLayout>(R.id.loading_layout)
+        val wifiErr = findViewById<ConstraintLayout>(R.id.wifi_err_layout)
 
         when (list) {
             0 -> listView.visibility = View.GONE
@@ -201,6 +203,11 @@ class MainActivity : AppCompatActivity() {
         when (loading) {
             0 -> loadingLayout.visibility = View.GONE
             1 -> loadingLayout.visibility = View.VISIBLE
+        }
+
+        when (error) {
+            0 -> wifiErr.visibility = View.GONE
+            1 -> wifiErr.visibility = View.VISIBLE
         }
     }
 
