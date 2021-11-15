@@ -23,17 +23,17 @@ class MainActivity : AppCompatActivity() {
     private val TODAY : Int = 1
     private val TOMORROW : Int = 2
 
-    val today = LocalDate.now()
-    val tomorrow = today.plusDays(1)
-    val yesterday = today.minusDays(1)
+    private val today = LocalDate.now()
+    private val tomorrow = today.plusDays(1)
+    private val yesterday = today.minusDays(1)
 
-    var datesArray = arrayOf("Yesterday", "Today", "Tomorrow")
+    private var datesArray = arrayOf("Yesterday", "Today", "Tomorrow")
     var currentDateVar = 0
 
     private val DEPARTURE : Int = 0
     private val ARRIVAL : Int = 1
 
-    var typesArray = arrayOf("Departure", "Arrival")
+    private var typesArray = arrayOf("Departure", "Arrival")
     var currentTypeVar = 0
 
     override fun onCreate (savedInstanceState: Bundle?) {
@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         val spinnerDates = findViewById<Spinner>(R.id.spinner_dates)
         val spinnerTypes = findViewById<Spinner>(R.id.spinner_flightTypes)
+        val reloadButton = findViewById<ImageButton>(R.id.reloadButton)
 
         datesArray[0] = "Yesterday (" + yesterday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
         datesArray[1] = "Today (" + today.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
@@ -90,6 +91,11 @@ class MainActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
         spinnerTypes.onItemSelectedListener = itemSelectedListenerTypes
+
+        reloadButton.setOnClickListener {
+            setFrameLayoutContent(0, 1)
+            setListViewContent(currentTypeVar, currentDateVar)
+        }
     }
 
     private fun setListViewContent (
