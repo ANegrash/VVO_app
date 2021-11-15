@@ -114,13 +114,14 @@
                         style="@style/textStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         android:textColor="@color/textColor"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/imageView_arrow"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="Владивосток" />
+                        tools:text="Vladivostok" />
 
                     <ImageView
                         android:id="@+id/imageView_arrow"
@@ -138,13 +139,14 @@
                         style="@style/textStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
                         android:textColor="@color/textColor"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView_arrow"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="Санкт-Петербург" />
+                        tools:text="Saint-Petersburg" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -160,7 +162,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/constraintlayout_flights"
-                    tools:text="Вылетел" />
+                    tools:text="Status" />
 
                 <View
                     android:id="@+id/br"
@@ -201,6 +203,32 @@
                     tools:text="-" />
 
                 <TextView
+                    android:id="@+id/textView_reception_time"
+                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/opensanslight"
+                    android:text="@string/checkin_time"
+                    android:textColor="@color/xdarkBack"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView_reception_desks_numbers" />
+
+                <TextView
+                    android:id="@+id/textView_reception_time_data"
+                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensansregular"
+                    android:textColor="@color/textColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView_reception_time"
+                    tools:text="-" />
+
+                <TextView
                     android:id="@+id/textView_exit"
                     style="@style/textStyle"
                     android:layout_width="wrap_content"
@@ -212,7 +240,7 @@
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textView_reception_desks_numbers" />
+                    app:layout_constraintTop_toBottomOf="@id/textView_reception_time_data" />
 
                 <TextView
                     android:id="@+id/textView_exit_number"
@@ -264,7 +292,7 @@
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textView_plan_date_current" />
+                    app:layout_constraintTop_toBottomOf="@id/br2" />
 
                 <TextView
                     android:id="@+id/textView_company_name"
@@ -278,6 +306,46 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView_company"
+                    tools:text="-" />
+
+                <View
+                    android:id="@+id/br2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="42dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="42dp"
+                    android:background="@color/xdarkBack"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_plan_date_current" />
+
+                <TextView
+                    android:id="@+id/vehicle"
+                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/opensanslight"
+                    android:text="@string/vehicle"
+                    android:textColor="@color/xdarkBack"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView_company_name" />
+
+                <TextView
+                    android:id="@+id/tvVehicle"
+                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensanslight"
+                    android:textColor="@color/textColor"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/vehicle"
                     tools:text="-" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

@@ -3,8 +3,10 @@
     <string name="main_activity_title">Online flight info</string>
     <string name="direction">Direction:</string>
     <string name="day">Day:</string>
-    <string name="reception_desks">Reception desks:</string>
+    <string name="reception_desks">Check-in desks:</string>
+    <string name="checkin_time">Check-in time:</string>
     <string name="exit">Gate:</string>
     <string name="plan_date">Date:</string>
     <string name="company">Airlines:</string>
+    <string name="vehicle">Aircraft type:</string>
 </resources>
