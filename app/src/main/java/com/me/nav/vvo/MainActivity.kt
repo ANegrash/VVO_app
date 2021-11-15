@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         val spinnerDates = findViewById<Spinner>(R.id.spinner_dates)
         val spinnerTypes = findViewById<Spinner>(R.id.spinner_flightTypes)
         val reloadButton = findViewById<ImageButton>(R.id.reloadButton)
+        val aboutButton = findViewById<ImageButton>(R.id.btn_faq)
 
         datesArray[0] = "Yesterday (" + yesterday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
         datesArray[1] = "Today (" + today.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
@@ -96,6 +97,11 @@ class MainActivity : AppCompatActivity() {
         reloadButton.setOnClickListener {
             setFrameLayoutContent(0, 1)
             setListViewContent(currentTypeVar, currentDateVar)
+        }
+
+        aboutButton.setOnClickListener {
+            val intent = Intent(applicationContext, AboutActivity::class.java)
+            startActivity(intent)
         }
     }
 

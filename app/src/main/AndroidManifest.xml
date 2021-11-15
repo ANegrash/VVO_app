@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Vvo">
         <activity
+            android:name=".AboutActivity"
+            android:exported="true" />
+        <activity
             android:name=".FlightInfo"
             android:exported="true" />
         <activity
