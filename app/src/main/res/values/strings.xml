@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">VVO aero</string>
-    <string name="main_activity_title">Онлайн-табло</string>
-    <string name="direction">Направление:</string>
-    <string name="day">День:</string>
-    <string name="reception_desks">Стойки регистрации:</string>
-    <string name="exit">Выход:</string>
-    <string name="plan_date">Дата:</string>
-    <string name="company">Авиакомпания:</string>
+    <string name="main_activity_title">Online flight info</string>
+    <string name="direction">Direction:</string>
+    <string name="day">Day:</string>
+    <string name="reception_desks">Reception desks:</string>
+    <string name="exit">Gate:</string>
+    <string name="plan_date">Date:</string>
+    <string name="company">Airlines:</string>
 </resources>

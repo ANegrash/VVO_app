@@ -2,32 +2,38 @@ package com.me.nav.vvo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.Spinner
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
+import com.me.nav.vvo.model.FlightModel
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
 import java.io.IOException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.lang.reflect.Type
 
 class MainActivity : AppCompatActivity() {
+
     private val YESTERDAY : Int = 0
     private val TODAY : Int = 1
     private val TOMORROW : Int = 2
 
+    val today = LocalDate.now()
+    val tomorrow = today.plusDays(1)
+    val yesterday = today.minusDays(1)
+
+    var datesArray = arrayOf("Yesterday", "Today", "Tomorrow")
+    var currentDateVar = 0
+
     private val DEPARTURE : Int = 0
     private val ARRIVAL : Int = 1
 
-    var datesArray = arrayOf("Вчера", "Сегодня", "Завтра")
-    var currentDateVar = 0
-
-    var typesArray = arrayOf("Вылет", "Прилёт")
+    var typesArray = arrayOf("Departure", "Arrival")
     var currentTypeVar = 0
 
     override fun onCreate (savedInstanceState: Bundle?) {
@@ -36,6 +42,10 @@ class MainActivity : AppCompatActivity() {
 
         val spinnerDates = findViewById<Spinner>(R.id.spinner_dates)
         val spinnerTypes = findViewById<Spinner>(R.id.spinner_flightTypes)
+
+        datesArray[0] = "Yesterday (" + yesterday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
+        datesArray[1] = "Today (" + today.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
+        datesArray[2] = "Tomorrow (" + tomorrow.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
 
         setListViewContent(currentTypeVar, currentDateVar)
 
@@ -49,40 +59,37 @@ class MainActivity : AppCompatActivity() {
         spinnerTypes.adapter = adapterTypes
         spinnerTypes.setSelection(currentTypeVar)
 
-        val itemSelectedListenerDates: AdapterView.OnItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View,
-                    position: Int,
-                    id: Long
-                ) {
-                    setFrameLayoutContent(0, 1)
-                    currentDateVar = position
-                    setListViewContent(currentTypeVar, currentDateVar)
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
+        val itemSelectedListenerDates: AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected (
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                setFrameLayoutContent(0, 1)
+                currentDateVar = position
+                setListViewContent(currentTypeVar, currentDateVar)
             }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
         spinnerDates.onItemSelectedListener = itemSelectedListenerDates
 
-        val itemSelectedListenerTypes: AdapterView.OnItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View,
-                    position: Int,
-                    id: Long
-                ) {
-                    setFrameLayoutContent(0, 1)
-                    currentTypeVar = position
-                    setListViewContent(currentTypeVar, currentDateVar)
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
+        val itemSelectedListenerTypes: AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected (
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                setFrameLayoutContent(0, 1)
+                currentTypeVar = position
+                setListViewContent(currentTypeVar, currentDateVar)
             }
-        spinnerTypes.onItemSelectedListener = itemSelectedListenerTypes
 
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+        spinnerTypes.onItemSelectedListener = itemSelectedListenerTypes
     }
 
     private fun setListViewContent (
@@ -90,9 +97,6 @@ class MainActivity : AppCompatActivity() {
         date: Int = TODAY
     ) {
         var url = "https://vvo.aero/php/ajax_xml.php?action=filter"
-        val today = LocalDate.now()
-        val tomorrow = today.plusDays(1)
-        val yesterday = today.minusDays(1)
 
         if (type == DEPARTURE) {
             url += "&type=departure"
@@ -126,17 +130,27 @@ class MainActivity : AppCompatActivity() {
                 @Throws(IOException::class)
                 override fun onResponse(call: Call, response: Response) {
                     if (response.body != null) {
-                        val jsonString = response.body!!.string()
-                        //here we can work with result
-                        Log.e("b3", jsonString)
+                        val stringResponse = response.body!!.string()
+                        val listView = findViewById<ListView>(R.id.flightList)
+                        val builder = GsonBuilder()
+                        val gson: Gson = builder.create()
+
+                        val typeToken: Type = object : TypeToken<List<FlightModel?>?>() {}.type
+                        val listOfFlights: List<FlightModel> = gson.fromJson(stringResponse, typeToken)
+
                         runOnUiThread {
+                            val stateAdapter = FlightListAdapter(applicationContext, R.layout.list_item, listOfFlights, type)
+                            listView.adapter = stateAdapter
                             setFrameLayoutContent(1, 0)
+                        }
+                    } else {
+                        runOnUiThread {
+                            setFrameLayoutContent(0, 1)
                         }
                     }
                 }
             }
         )
-
     }
 
     private fun setFrameLayoutContent (
