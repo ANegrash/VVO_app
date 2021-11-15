@@ -1,5 +1,6 @@
 package com.me.nav.vvo
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -147,6 +148,26 @@ class MainActivity : AppCompatActivity() {
                         runOnUiThread {
                             val stateAdapter = FlightListAdapter(applicationContext, R.layout.list_item, listOfFlights, type)
                             listView.adapter = stateAdapter
+                            listView.onItemClickListener =
+                                AdapterView.OnItemClickListener { parent, view, position, id ->
+                                    run {
+                                        val intent = Intent(applicationContext, FlightInfo::class.java)
+                                        intent.putExtra("src", listOfFlights[position].src_port)
+                                        intent.putExtra("dest", listOfFlights[position].dest_port)
+                                        intent.putExtra("num", listOfFlights[position].reys_num)
+                                        intent.putExtra("status", listOfFlights[position].status)
+                                        intent.putExtra("checkin", listOfFlights[position].checkin_desk)
+                                        intent.putExtra("gate", listOfFlights[position].stay_number)
+                                        intent.putExtra("date", listOfFlights[position].date_and_time_calc)
+                                        intent.putExtra("airline", listOfFlights[position].aircompany)
+                                        intent.putExtra("vehicle", listOfFlights[position].typevs_code)
+                                        if (type == DEPARTURE) {
+                                            val regTime: String = getTrueTime(listOfFlights[position].checkin_begin) + " - " + getTrueTime(listOfFlights[position].checkin_end)
+                                            intent.putExtra("regTime", regTime)
+                                        }
+                                        startActivity(intent)
+                                    }
+                                }
                             setFrameLayoutContent(1, 0)
                         }
                     } else {
@@ -175,5 +196,11 @@ class MainActivity : AppCompatActivity() {
             0 -> loadingLayout.visibility = View.GONE
             1 -> loadingLayout.visibility = View.VISIBLE
         }
+    }
+
+    private fun getTrueTime (
+        time: String
+    ): String {
+        return time.split(" ").toTypedArray()[1]
     }
 }
