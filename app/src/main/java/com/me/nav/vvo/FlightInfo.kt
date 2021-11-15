@@ -50,7 +50,7 @@ class FlightInfo : AppCompatActivity() {
         tvVehicle.text = vehicle
 
         backBtn.setOnClickListener {
-            super.finish()
+            finish()
         }
 
     }

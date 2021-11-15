@@ -9,4 +9,8 @@
     <string name="plan_date">Date:</string>
     <string name="company">Airlines:</string>
     <string name="vehicle">Aircraft type:</string>
+    <string name="phone">8(423)230-69-09</string>
+    <string name="address">Vladimir Saibel Street, 41, Artem</string>
+    <string name="dev_email">dev@nav-com.ru</string>
+    <string name="version">v1.0.0</string>
 </resources>
