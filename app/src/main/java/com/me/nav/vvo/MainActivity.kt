@@ -34,8 +34,9 @@ class MainActivity : AppCompatActivity() {
     private val DEPARTURE : Int = 0
     private val ARRIVAL : Int = 1
 
-    private var typesArray = arrayOf("Departure", "Arrival")
+    private var typesArray = arrayOf("Отправление", "Прибытие")
     var currentTypeVar = 0
+    var phpSessionId: String = ""
 
     override fun onCreate (savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,9 +47,15 @@ class MainActivity : AppCompatActivity() {
         val reloadButton = findViewById<ImageButton>(R.id.reloadButton)
         val aboutButton = findViewById<ImageButton>(R.id.btn_faq)
 
-        datesArray[0] = "Yesterday (" + yesterday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
-        datesArray[1] = "Today (" + today.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
-        datesArray[2] = "Tomorrow (" + tomorrow.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
+        setFrameLayoutContent(0, 1, 0)
+        getCookie()
+        while (phpSessionId == "") {
+            Thread.sleep(250)
+        }
+
+        datesArray[0] = "Вчера (" + yesterday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
+        datesArray[1] = "Сегодня (" + today.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
+        datesArray[2] = "Завтра (" + tomorrow.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
 
         setListViewContent(currentTypeVar, currentDateVar)
 
@@ -133,6 +140,7 @@ class MainActivity : AppCompatActivity() {
 
         getResponse.run(
             url,
+            phpSessionId,
             object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     runOnUiThread {
@@ -214,6 +222,30 @@ class MainActivity : AppCompatActivity() {
     private fun getTrueTime (
         time: String
     ): String {
-        return time.split(" ").toTypedArray()[1]
+        val trueTime = time.split(" ").toTypedArray()
+        return if (trueTime.size > 1)
+            trueTime[1]
+        else
+            ""
+    }
+
+    private fun getCookie() {
+        val getResponse = Get()
+
+        getResponse.run(
+            "https://vvo.aero/passengers/services/cloakroom/",
+            "",
+            object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    phpSessionId = ""
+                }
+
+                @Throws(IOException::class)
+                override fun onResponse(call: Call, response: Response) {
+                    val header: String = response.headers.toString()
+                    phpSessionId = header.split("PHPSESSID=")[1].split(";")[0]
+                }
+            }
+        )
     }
 }

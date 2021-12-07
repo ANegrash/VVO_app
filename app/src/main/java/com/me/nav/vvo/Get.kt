@@ -8,12 +8,22 @@ class Get {
 
     fun run(
         url: String,
+        cookie: String,
         callback: Callback
     ) {
         val okHttpClient = OkHttpClient()
-        val request = Request.Builder()
-            .url(url)
-            .build()
-        okHttpClient.newCall(request).enqueue(callback)
+
+        if (cookie == "") {
+            val request = Request.Builder()
+                .url(url)
+                .build()
+            okHttpClient.newCall(request).enqueue(callback)
+        } else {
+            val request = Request.Builder()
+                .url(url)
+                .addHeader("Cookie", "PHPSESSID=$cookie")
+                .build()
+            okHttpClient.newCall(request).enqueue(callback)
+        }
     }
 }
