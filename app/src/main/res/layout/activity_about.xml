@@ -75,7 +75,7 @@
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/russian"
                 android:gravity="center"
-                android:text="Airport"
+                android:text="@string/airport_header"
                 android:textColor="@color/textColor"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -163,7 +163,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/russian"
                 android:gravity="center"
-                android:text="Developer"
+                android:text="@string/dev_header"
                 android:textColor="@color/textColor"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -238,7 +238,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/russian"
-                    android:text="This app is NOT official"
+                    android:text="@string/dev_disclaimer"
                     android:textColor="@color/secondary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

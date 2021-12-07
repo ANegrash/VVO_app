@@ -40,7 +40,7 @@ class FlightListAdapter (
 
         if (obj.delay_code.isNotEmpty()) {
             status.setTextColor(Color.parseColor(warningColor))
-            status.text = "Delayed for " + obj.delay_time
+            status.text = "задержан на " + obj.delay_time
         } else
             status.text = obj.status
 
@@ -55,6 +55,10 @@ class FlightListAdapter (
     private fun getTrueTime (
         time: String
     ): String {
-        return time.split(" ").toTypedArray()[1]
+        val trueTime = time.split(" ").toTypedArray()
+        return if (trueTime.size > 1)
+            trueTime[1]
+        else
+            ""
     }
 }
