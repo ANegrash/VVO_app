@@ -18,6 +18,12 @@
     <string name="company_en">Airlines:</string>
     <string name="vehicle">Модель самолёта:</string>
     <string name="vehicle_en">Aircraft type:</string>
+    <string name="settings_name">Настройки</string>
+    <string name="settings_name_en">Settings</string>
+    <string name="dark_mode">Тёмная тема</string>
+    <string name="dark_mode_en">Dark mode</string>
+    <string name="rate_us">Оценить приложение</string>
+    <string name="rate_us_en">Rate app</string>
     <string name="airport_header">Аэропорт</string>
     <string name="airport_header_en">Airport</string>
     <string name="phone">8(423)230-69-09</string>
