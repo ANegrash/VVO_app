@@ -18,11 +18,14 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.lang.reflect.Type
 
-class MainActivity : AppCompatActivity() {
+private const val YESTERDAY : Int = 0
+private const val TODAY : Int = 1
+private const val TOMORROW : Int = 2
 
-    private val YESTERDAY : Int = 0
-    private val TODAY : Int = 1
-    private val TOMORROW : Int = 2
+private const val DEPARTURE : Int = 0
+private const val ARRIVAL : Int = 1
+
+class MainActivity : AppCompatActivity() {
 
     private val today = LocalDate.now()
     private val tomorrow = today.plusDays(1)
@@ -30,9 +33,6 @@ class MainActivity : AppCompatActivity() {
 
     private var datesArray = arrayOf("Yesterday", "Today", "Tomorrow")
     var currentDateVar = 0
-
-    private val DEPARTURE : Int = 0
-    private val ARRIVAL : Int = 1
 
     private var typesArray = arrayOf("Отправление", "Прибытие")
     var currentTypeVar = 0
