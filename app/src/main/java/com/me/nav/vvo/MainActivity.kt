@@ -59,12 +59,12 @@ class MainActivity : AppCompatActivity() {
 
         setListViewContent(currentTypeVar, currentDateVar)
 
-        val adapterDates = ArrayAdapter(this, android.R.layout.simple_spinner_item, datesArray)
+        val adapterDates = ArrayAdapter(this, R.layout.spinner_item, datesArray)
         adapterDates.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerDates.adapter = adapterDates
         spinnerDates.setSelection(currentDateVar)
 
-        val adapterTypes = ArrayAdapter(this, android.R.layout.simple_spinner_item, typesArray)
+        val adapterTypes = ArrayAdapter(this, R.layout.spinner_item, typesArray)
         adapterTypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerTypes.adapter = adapterTypes
         spinnerTypes.setSelection(currentTypeVar)
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         val itemSelectedListenerDates: AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected (
                 parent: AdapterView<*>?,
-                view: View,
+                view: View?,
                 position: Int,
                 id: Long
             ) {
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         val itemSelectedListenerTypes: AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected (
                 parent: AdapterView<*>?,
-                view: View,
+                view: View?,
                 position: Int,
                 id: Long
             ) {
@@ -160,7 +160,7 @@ class MainActivity : AppCompatActivity() {
                         val listOfFlights: List<FlightModel> = gson.fromJson(stringResponse, typeToken)
 
                         runOnUiThread {
-                            val stateAdapter = FlightListAdapter(applicationContext, R.layout.list_item, listOfFlights, type)
+                            val stateAdapter = FlightListAdapter(this@MainActivity, R.layout.list_item, listOfFlights, type)
                             listView.adapter = stateAdapter
                             listView.onItemClickListener =
                                 AdapterView.OnItemClickListener { parent, view, position, id ->

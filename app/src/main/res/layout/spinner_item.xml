@@ -1,0 +1,10 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/darkBack"
+    android:fontFamily="@font/russian"
+    android:gravity="left"
+    android:paddingLeft="5dp"
+    android:textAlignment="viewStart"
+    android:textColor="@color/white"
+    android:textSize="16sp" />
