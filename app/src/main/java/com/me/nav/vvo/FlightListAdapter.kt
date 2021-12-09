@@ -40,7 +40,8 @@ class FlightListAdapter (
 
         if (obj.delay_code.isNotEmpty()) {
             status.setTextColor(Color.parseColor(warningColor))
-            status.text = "задержан на " + obj.delay_time
+            val statusText = context.resources.getString(R.string.delay_msg) + " " + obj.delay_time
+            status.text = statusText
         } else
             status.text = obj.status
 

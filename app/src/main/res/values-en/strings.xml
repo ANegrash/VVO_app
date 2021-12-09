@@ -5,7 +5,6 @@
     <string name="direction">Direction:</string>
     <string name="day">Date:</string>
     <string name="reception_desks">Check-in desks:</string>
-    <string name="phone">8(423)230-69-09</string>
     <string name="checkin_time">Check-in time:</string>
     <string name="exit">Gate:</string>
     <string name="plan_date">Planned date:</string>
@@ -15,8 +14,14 @@
     <string name="dark_mode">Dark mode</string>
     <string name="rate_us">Rate app</string>
     <string name="airport_header">Airport</string>
-    <string name="address">Vladimir Saibel Street, 45, Artem</string>
+    <string name="address">Vladimira Saybelya Street, 41, Artem</string>
     <string name="dev_header">Developer</string>
     <string name="dev_email">dev@nav-com.ru</string>
     <string name="dev_disclaimer">This app is NOT official</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="departure">Departure</string>
+    <string name="arrival">Arrival</string>
+    <string name="delay_msg">delayed for</string>
 </resources>

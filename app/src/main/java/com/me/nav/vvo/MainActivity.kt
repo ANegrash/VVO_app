@@ -1,5 +1,6 @@
 package com.me.nav.vvo
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -31,12 +32,12 @@ class MainActivity : AppCompatActivity() {
     private val tomorrow = today.plusDays(1)
     private val yesterday = today.minusDays(1)
 
-    private var datesArray = arrayOf("Yesterday", "Today", "Tomorrow")
-    var currentDateVar = 0
+    var currentDateVar = YESTERDAY
 
-    private var typesArray = arrayOf("Отправление", "Прибытие")
-    var currentTypeVar = 0
+    var currentTypeVar = DEPARTURE
     var phpSessionId: String = ""
+
+    private val sharedPrefs by lazy {  getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE) }
 
     override fun onCreate (savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,28 +47,38 @@ class MainActivity : AppCompatActivity() {
         val spinnerTypes = findViewById<Spinner>(R.id.spinner_flightTypes)
         val reloadButton = findViewById<ImageButton>(R.id.reloadButton)
         val aboutButton = findViewById<ImageButton>(R.id.btn_faq)
+        val langCode = getSavedLang()
 
         setFrameLayoutContent(0, 1, 0)
-        getCookie()
-        while (phpSessionId == "") {
-            Thread.sleep(250)
+        if (langCode == "ru") {
+            getCookie()
+            while (phpSessionId == "") {
+                Thread.sleep(250)
+            }
         }
 
-        datesArray[0] = "Вчера (" + yesterday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
-        datesArray[1] = "Сегодня (" + today.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
-        datesArray[2] = "Завтра (" + tomorrow.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
+        val datesArray = arrayOf(
+            getString(R.string.yesterday) + " (" + yesterday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")",
+            getString(R.string.today) + " (" + today.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")",
+            getString(R.string.tomorrow) + " (" + tomorrow.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
+        )
+
+        val typesArray = arrayOf(
+            getString(R.string.departure),
+            getString(R.string.arrival)
+        )
 
         setListViewContent(currentTypeVar, currentDateVar)
 
         val adapterDates = ArrayAdapter(this, R.layout.spinner_item, datesArray)
         adapterDates.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerDates.adapter = adapterDates
-        spinnerDates.setSelection(currentDateVar)
+        spinnerDates.setSelection(currentDateVar, false)
 
         val adapterTypes = ArrayAdapter(this, R.layout.spinner_item, typesArray)
         adapterTypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerTypes.adapter = adapterTypes
-        spinnerTypes.setSelection(currentTypeVar)
+        spinnerTypes.setSelection(currentTypeVar, false)
 
         val itemSelectedListenerDates: AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected (
@@ -248,4 +259,7 @@ class MainActivity : AppCompatActivity() {
             }
         )
     }
+
+
+    private fun getSavedLang() = sharedPrefs.getString(KEY_LANG, "ru")
 }

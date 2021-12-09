@@ -4,6 +4,7 @@
     android:background="@color/darkBack"
     android:fontFamily="@font/russian"
     android:gravity="left"
+    android:maxLines="1"
     android:paddingLeft="5dp"
     android:textAlignment="viewStart"
     android:textColor="@color/white"
