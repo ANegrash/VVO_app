@@ -21,6 +21,10 @@ import java.time.format.DateTimeFormatter
 import java.lang.reflect.Type
 import java.util.*
 
+
+const val KEY_TYPE = "prefs.type"
+const val KEY_DATE = "prefs.date"
+
 private const val YESTERDAY : Int = 0
 private const val TODAY : Int = 1
 private const val TOMORROW : Int = 2
@@ -38,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     var currentTypeVar = DEPARTURE
     var phpSessionId: String = ""
+    private val sharedPrefs by lazy {  getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE) }
 
     override fun onCreate (savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,17 +78,17 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.arrival)
         )
 
-        setListViewContent(currentTypeVar, currentDateVar)
+        setListViewContent(getSavedType(), getSavedDate())
 
         val adapterDates = ArrayAdapter(this, R.layout.spinner_item, datesArray)
         adapterDates.setDropDownViewResource(R.layout.spinner_popup_item)
         spinnerDates.adapter = adapterDates
-        spinnerDates.setSelection(currentDateVar, false)
+        spinnerDates.setSelection(getSavedDate(), false)
 
         val adapterTypes = ArrayAdapter(this, R.layout.spinner_item, typesArray)
         adapterTypes.setDropDownViewResource(R.layout.spinner_popup_item)
         spinnerTypes.adapter = adapterTypes
-        spinnerTypes.setSelection(currentTypeVar, false)
+        spinnerTypes.setSelection(getSavedType(), false)
 
         val itemSelectedListenerDates: AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected (
@@ -133,6 +138,9 @@ class MainActivity : AppCompatActivity() {
         date: Int = TODAY
     ) {
         var url = "https://vvo.aero/php/ajax_xml.php?action=filter"
+
+        saveDate(date)
+        saveType(type)
 
         if (type == DEPARTURE) {
             url += "&type=departure"
@@ -264,4 +272,12 @@ class MainActivity : AppCompatActivity() {
             }
         )
     }
+
+    private fun getSavedType() = sharedPrefs.getInt(KEY_TYPE, 0)
+
+    private fun saveType(type: Int) = sharedPrefs.edit().putInt(KEY_TYPE, type).apply()
+
+    private fun getSavedDate() = sharedPrefs.getInt(KEY_DATE, 0)
+
+    private fun saveDate(date: Int) = sharedPrefs.edit().putInt(KEY_DATE, date).apply()
 }
