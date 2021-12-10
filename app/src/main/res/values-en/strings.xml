@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VVO aero</string>
+    <string name="main_activity_title">Online flight info</string>
+    <string name="direction">Direction:</string>
+    <string name="day">Date:</string>
+    <string name="reception_desks">Check-in desks:</string>
+    <string name="checkin_time">Check-in time:</string>
+    <string name="exit">Gate:</string>
+    <string name="plan_date">Planned date:</string>
+    <string name="company">Airlines:</string>
+    <string name="vehicle">Aircraft type:</string>
+    <string name="settings_name">Settings</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="rate_us">Rate app</string>
+    <string name="airport_header">Airport</string>
+    <string name="address">Vladimira Saybelya Street, 41, Artem</string>
+    <string name="dev_header">Developer</string>
+    <string name="dev_email">dev@nav-com.ru</string>
+    <string name="dev_disclaimer">This app is NOT official</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="departure">Departure</string>
+    <string name="arrival">Arrival</string>
+    <string name="delay_msg">delayed for</string>
+    <string name="wifi_error">Some problems.Check your internet connection and try again later</string>
+</resources>

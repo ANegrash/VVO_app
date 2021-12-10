@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">VVO aero</string>
     <string name="main_activity_title">Онлайн-табло рейсов</string>
@@ -13,12 +14,10 @@
     <string name="dark_mode">Тёмная тема</string>
     <string name="rate_us">Оценить приложение</string>
     <string name="airport_header">Аэропорт</string>
-    <string name="phone" translatable="false">+7(423)230-69-09</string>
-    <string name="address">ул. Владимира Сайбеля, 45, Артём</string>
+    <string name="address">ул. Владимира Сайбеля, 41, Артём</string>
     <string name="dev_header">Разработчик</string>
     <string name="dev_email">dev@nav-com.ru</string>
     <string name="dev_disclaimer">Это приложение НЕ является официальным</string>
-    <string name="version" translatable="false">v1.1.0</string>
     <string name="yesterday">Вчера</string>
     <string name="today">Сегодня</string>
     <string name="tomorrow">Завтра</string>

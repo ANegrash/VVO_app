@@ -53,15 +53,13 @@
 
                 <ImageButton
                     android:id="@+id/btn_faq"
-                    android:layout_width="16dp"
-                    android:layout_height="21dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_marginEnd="24dp"
-                    android:layout_marginRight="24dp"
-                    android:background="@drawable/question_solid"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/reloadButton"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    android:background="@drawable/settings" />
 
                 <ImageButton
                     android:id="@+id/reloadButton"
@@ -102,7 +100,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="Some problems... \nCheck your internet connection and try again later"
+                android:text="@string/wifi_error"
                 android:textAlignment="center"
                 android:textColor="@color/xdarkBack"
                 android:textStyle="bold"
@@ -188,8 +186,11 @@
                 android:id="@+id/spinner_flightTypes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:pointerIcon="arrow"
                 android:popupBackground="@color/darkBack"
-                android:theme="@style/Theme.Vvo"
+                android:popupTheme="@style/SplashTheme"
+                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="@id/textView_menu_item1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/constraintlayout_menu_item1"
@@ -226,8 +227,10 @@
                 android:id="@+id/spinner_dates"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:pointerIcon="arrow"
                 android:popupBackground="@color/darkBack"
-                android:theme="@style/Theme.Vvo"
+                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="@id/textView_menu_item2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/constraintlayout_menu_item2"

@@ -1,8 +1,10 @@
 package com.me.nav.vvo
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -17,25 +19,24 @@ import java.io.IOException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.lang.reflect.Type
+import java.util.*
+
+private const val YESTERDAY : Int = 0
+private const val TODAY : Int = 1
+private const val TOMORROW : Int = 2
+
+private const val DEPARTURE : Int = 0
+private const val ARRIVAL : Int = 1
 
 class MainActivity : AppCompatActivity() {
-
-    private val YESTERDAY : Int = 0
-    private val TODAY : Int = 1
-    private val TOMORROW : Int = 2
 
     private val today = LocalDate.now()
     private val tomorrow = today.plusDays(1)
     private val yesterday = today.minusDays(1)
 
-    private var datesArray = arrayOf("Yesterday", "Today", "Tomorrow")
-    var currentDateVar = 0
+    var currentDateVar = YESTERDAY
 
-    private val DEPARTURE : Int = 0
-    private val ARRIVAL : Int = 1
-
-    private var typesArray = arrayOf("Отправление", "Прибытие")
-    var currentTypeVar = 0
+    var currentTypeVar = DEPARTURE
     var phpSessionId: String = ""
 
     override fun onCreate (savedInstanceState: Bundle?) {
@@ -47,32 +48,47 @@ class MainActivity : AppCompatActivity() {
         val reloadButton = findViewById<ImageButton>(R.id.reloadButton)
         val aboutButton = findViewById<ImageButton>(R.id.btn_faq)
 
+        val currentLocale: String = Locale.getDefault().language
+
         setFrameLayoutContent(0, 1, 0)
-        getCookie()
-        while (phpSessionId == "") {
-            Thread.sleep(250)
+
+        if (currentLocale == "ru") {
+            getCookie()
+            var time = 0
+            while (phpSessionId == "") {
+                Thread.sleep(250)
+                time += 250
+                if (time >= 5000) break
+            }
         }
 
-        datesArray[0] = "Вчера (" + yesterday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
-        datesArray[1] = "Сегодня (" + today.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
-        datesArray[2] = "Завтра (" + tomorrow.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
+        val datesArray = arrayOf(
+            getString(R.string.yesterday) + " (" + yesterday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")",
+            getString(R.string.today) + " (" + today.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")",
+            getString(R.string.tomorrow) + " (" + tomorrow.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ")"
+        )
+
+        val typesArray = arrayOf(
+            getString(R.string.departure),
+            getString(R.string.arrival)
+        )
 
         setListViewContent(currentTypeVar, currentDateVar)
 
-        val adapterDates = ArrayAdapter(this, android.R.layout.simple_spinner_item, datesArray)
-        adapterDates.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val adapterDates = ArrayAdapter(this, R.layout.spinner_item, datesArray)
+        adapterDates.setDropDownViewResource(R.layout.spinner_popup_item)
         spinnerDates.adapter = adapterDates
-        spinnerDates.setSelection(currentDateVar)
+        spinnerDates.setSelection(currentDateVar, false)
 
-        val adapterTypes = ArrayAdapter(this, android.R.layout.simple_spinner_item, typesArray)
-        adapterTypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val adapterTypes = ArrayAdapter(this, R.layout.spinner_item, typesArray)
+        adapterTypes.setDropDownViewResource(R.layout.spinner_popup_item)
         spinnerTypes.adapter = adapterTypes
-        spinnerTypes.setSelection(currentTypeVar)
+        spinnerTypes.setSelection(currentTypeVar, false)
 
         val itemSelectedListenerDates: AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected (
                 parent: AdapterView<*>?,
-                view: View,
+                view: View?,
                 position: Int,
                 id: Long
             ) {
@@ -88,7 +104,7 @@ class MainActivity : AppCompatActivity() {
         val itemSelectedListenerTypes: AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected (
                 parent: AdapterView<*>?,
-                view: View,
+                view: View?,
                 position: Int,
                 id: Long
             ) {
@@ -160,7 +176,7 @@ class MainActivity : AppCompatActivity() {
                         val listOfFlights: List<FlightModel> = gson.fromJson(stringResponse, typeToken)
 
                         runOnUiThread {
-                            val stateAdapter = FlightListAdapter(applicationContext, R.layout.list_item, listOfFlights, type)
+                            val stateAdapter = FlightListAdapter(this@MainActivity, R.layout.list_item, listOfFlights, type)
                             listView.adapter = stateAdapter
                             listView.onItemClickListener =
                                 AdapterView.OnItemClickListener { parent, view, position, id ->
