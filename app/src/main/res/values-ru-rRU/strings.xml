@@ -24,4 +24,5 @@
     <string name="departure">Отправление</string>
     <string name="arrival">Прибытие</string>
     <string name="delay_msg">задержан на</string>
+    <string name="wifi_error">Ошибка получения данных. Проверьте подключение к интернету и попробуйте позже</string>
 </resources>

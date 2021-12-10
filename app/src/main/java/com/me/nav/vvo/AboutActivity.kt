@@ -23,10 +23,6 @@ const val THEME_DARK = 1
 class AboutActivity : AppCompatActivity() {
 
     private val sharedPrefs by lazy {  getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE) }
-    private var langsArray = arrayOf("Русский", "English")
-    private var langCodesArray = arrayOf("ru", "en")
-    private var langTitlesArray = arrayOf("Перазпуск приложения", "Restart the app")
-    private var langMessagesArray = arrayOf("Для установки русского языка требуется перезапуск приложения", "The application will be restarted to install the English language")
 
     override fun onCreate (savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +32,6 @@ class AboutActivity : AppCompatActivity() {
         val themeView = findViewById<ConstraintLayout>(R.id.themeView)
         val underlineThemeView = findViewById<LinearLayout>(R.id.underThemeView)
         val switch = findViewById<Switch>(R.id.dark_mode_switch)
-        val spinnerLanguage = findViewById<Spinner>(R.id.spinnerLanguage)
         val rateUsBtn = findViewById<Button>(R.id.rate_us)
         val phoneTv = findViewById<TextView>(R.id.phoneTv)
         val mapTv = findViewById<TextView>(R.id.mapTv)
@@ -58,43 +53,6 @@ class AboutActivity : AppCompatActivity() {
             themeView.visibility = View.GONE
             underlineThemeView.visibility = View.GONE
         }
-
-        val adapterLangs = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, langsArray)
-        adapterLangs.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerLanguage.adapter = adapterLangs
-        val currentLang = getSavedLang()
-        var selectedLang = 0
-        if (currentLang == "ru") {
-            selectedLang = 0
-        } else if (currentLang == "en") {
-            selectedLang = 1
-        }
-        spinnerLanguage.setSelection(selectedLang, false)
-
-        val itemSelectedListenerLangs: AdapterView.OnItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected (
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                saveLang(langCodesArray[position])
-                val builder = AlertDialog.Builder(this@AboutActivity)
-                builder.setTitle(langTitlesArray[position])
-                builder.setMessage(langMessagesArray[position])
-                builder.setPositiveButton("OK"){ _, _ ->
-                    val restartedIntent = baseContext.packageManager
-                        .getLaunchIntentForPackage(baseContext.packageName)
-                    restartedIntent!!.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(restartedIntent)
-                }
-                val dialog: AlertDialog = builder.create()
-                dialog.show()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
-        spinnerLanguage.onItemSelectedListener = itemSelectedListenerLangs
 
         rateUsBtn.setOnClickListener {
             val uri: Uri = Uri.parse("market://details?id=$packageName")
@@ -147,9 +105,5 @@ class AboutActivity : AppCompatActivity() {
     private fun saveTheme(theme: Int) = sharedPrefs.edit().putInt(KEY_THEME, theme).apply()
 
     private fun getSavedTheme() = sharedPrefs.getInt(KEY_THEME, 0)
-
-    private fun saveLang(lang: String) = sharedPrefs.edit().putString(KEY_LANG, lang).apply()
-
-    private fun getSavedLang() = sharedPrefs.getString(KEY_LANG, "ru")
 
 }

@@ -13,7 +13,7 @@
     <string name="dark_mode">Тёмная тема</string>
     <string name="rate_us">Оценить приложение</string>
     <string name="airport_header">Аэропорт</string>
-    <string name="phone" translatable="false">+7(423)230–69-09</string>
+    <string name="phone" translatable="false">+7(423)230-69-09</string>
     <string name="address">ул. Владимира Сайбеля, 45, Артём</string>
     <string name="dev_header">Разработчик</string>
     <string name="dev_email">dev@nav-com.ru</string>
@@ -25,4 +25,5 @@
     <string name="departure">Отправление</string>
     <string name="arrival">Прибытие</string>
     <string name="delay_msg">задержан на</string>
+    <string name="wifi_error">Ошибка получения данных. Проверьте подключение к интернету и попробуйте позже</string>
 </resources>

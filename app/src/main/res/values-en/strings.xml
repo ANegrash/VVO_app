@@ -24,4 +24,5 @@
     <string name="departure">Departure</string>
     <string name="arrival">Arrival</string>
     <string name="delay_msg">delayed for</string>
+    <string name="wifi_error">Some problems.Check your internet connection and try again later</string>
 </resources>

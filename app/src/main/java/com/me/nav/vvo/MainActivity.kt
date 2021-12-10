@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -18,6 +19,7 @@ import java.io.IOException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.lang.reflect.Type
+import java.util.*
 
 private const val YESTERDAY : Int = 0
 private const val TODAY : Int = 1
@@ -37,8 +39,6 @@ class MainActivity : AppCompatActivity() {
     var currentTypeVar = DEPARTURE
     var phpSessionId: String = ""
 
-    private val sharedPrefs by lazy {  getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE) }
-
     override fun onCreate (savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -47,13 +47,18 @@ class MainActivity : AppCompatActivity() {
         val spinnerTypes = findViewById<Spinner>(R.id.spinner_flightTypes)
         val reloadButton = findViewById<ImageButton>(R.id.reloadButton)
         val aboutButton = findViewById<ImageButton>(R.id.btn_faq)
-        val langCode = getSavedLang()
+
+        val currentLocale: String = Locale.getDefault().language
 
         setFrameLayoutContent(0, 1, 0)
-        if (langCode == "ru") {
+
+        if (currentLocale == "ru") {
             getCookie()
+            var time = 0
             while (phpSessionId == "") {
                 Thread.sleep(250)
+                time += 250
+                if (time >= 5000) break
             }
         }
 
@@ -71,12 +76,12 @@ class MainActivity : AppCompatActivity() {
         setListViewContent(currentTypeVar, currentDateVar)
 
         val adapterDates = ArrayAdapter(this, R.layout.spinner_item, datesArray)
-        adapterDates.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapterDates.setDropDownViewResource(R.layout.spinner_popup_item)
         spinnerDates.adapter = adapterDates
         spinnerDates.setSelection(currentDateVar, false)
 
         val adapterTypes = ArrayAdapter(this, R.layout.spinner_item, typesArray)
-        adapterTypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapterTypes.setDropDownViewResource(R.layout.spinner_popup_item)
         spinnerTypes.adapter = adapterTypes
         spinnerTypes.setSelection(currentTypeVar, false)
 
@@ -259,7 +264,4 @@ class MainActivity : AppCompatActivity() {
             }
         )
     }
-
-
-    private fun getSavedLang() = sharedPrefs.getString(KEY_LANG, "ru")
 }
