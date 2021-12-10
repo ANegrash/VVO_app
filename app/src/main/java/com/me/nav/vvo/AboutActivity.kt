@@ -16,7 +16,6 @@ import java.util.*
 
 const val PREFS_NAME = "theme_prefs"
 const val KEY_THEME = "prefs.theme"
-const val KEY_LANG = "prefs.lang"
 const val THEME_LIGHT = 0
 const val THEME_DARK = 1
 
