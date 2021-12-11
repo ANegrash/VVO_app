@@ -25,4 +25,10 @@
     <string name="arrival">Arrival</string>
     <string name="delay_msg">delayed for</string>
     <string name="wifi_error">Some problems.Check your internet connection and try again later</string>
+    <string name="hour_1">hour</string>
+    <string name="hour_2">hours</string>
+    <string name="hour_3">hours</string>
+    <string name="minute_1">minute</string>
+    <string name="minute_2">minutes</string>
+    <string name="minute_3">minutes</string>
 </resources>
