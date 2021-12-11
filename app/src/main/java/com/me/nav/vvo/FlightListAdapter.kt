@@ -40,7 +40,8 @@ class FlightListAdapter (
 
         if (obj.delay_code.isNotEmpty()) {
             status.setTextColor(Color.parseColor(warningColor))
-            status.text = "задержан на " + obj.delay_time
+            val statusText = context.resources.getString(R.string.delay_msg) + " " + getDelayTime(obj.delay_time)
+            status.text = statusText
         } else
             status.text = obj.status
 
@@ -60,5 +61,50 @@ class FlightListAdapter (
             trueTime[1]
         else
             ""
+    }
+
+    private fun getDelayTime (
+        time: String
+    ): String {
+        val timeArray = time.split(":").toTypedArray()
+        var result = ""
+        if (timeArray[0] != "00") {
+            val hours = timeArray[0].toInt()
+            result += "$hours "
+            result += if (hours % 100 > 20 || hours % 100 < 5) {
+                when {
+                    hours % 10 == 1 -> {
+                        context.resources.getString(R.string.hour_1) + " "
+                    }
+                    hours % 10 in 2..4 -> {
+                        context.resources.getString(R.string.hour_2) + " "
+                    }
+                    else -> {
+                        context.resources.getString(R.string.hour_3) + " "
+                    }
+                }
+            } else {
+                context.resources.getString(R.string.hour_3) + " "
+            }
+        }
+
+        val minutes = timeArray[1].toInt()
+        result += "$minutes "
+        result += if (minutes % 100 > 20 || minutes % 100 < 5) {
+            when {
+                minutes % 10 == 1 -> {
+                    context.resources.getString(R.string.minute_1) + " "
+                }
+                minutes % 10 in 2..4 -> {
+                    context.resources.getString(R.string.minute_2) + " "
+                }
+                else -> {
+                    context.resources.getString(R.string.minute_3) + " "
+                }
+            }
+        } else {
+            context.resources.getString(R.string.minute_3) + " "
+        }
+        return result
     }
 }
