@@ -26,4 +26,10 @@
     <string name="arrival">Прибытие</string>
     <string name="delay_msg">задержан на</string>
     <string name="wifi_error">Ошибка получения данных. Проверьте подключение к интернету и попробуйте позже</string>
+    <string name="hour_1">час</string>
+    <string name="hour_2">часа</string>
+    <string name="hour_3">часов</string>
+    <string name="minute_1">минуту</string>
+    <string name="minute_2">минуты</string>
+    <string name="minute_3">минут</string>
 </resources>
