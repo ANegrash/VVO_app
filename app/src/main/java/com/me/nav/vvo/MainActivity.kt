@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +19,6 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.lang.reflect.Type
 import java.util.*
-
 
 const val KEY_TYPE = "prefs.type"
 const val KEY_DATE = "prefs.date"
@@ -142,11 +140,10 @@ class MainActivity : AppCompatActivity() {
         saveDate(date)
         saveType(type)
 
-        if (type == DEPARTURE) {
+        if (type == DEPARTURE)
             url += "&type=departure"
-        } else if (type == ARRIVAL) {
+        else if (type == ARRIVAL)
             url += "&type=arrival"
-        }
 
         when (date) {
             YESTERDAY -> {
@@ -187,7 +184,7 @@ class MainActivity : AppCompatActivity() {
                             val stateAdapter = FlightListAdapter(this@MainActivity, R.layout.list_item, listOfFlights, type)
                             listView.adapter = stateAdapter
                             listView.onItemClickListener =
-                                AdapterView.OnItemClickListener { parent, view, position, id ->
+                                AdapterView.OnItemClickListener { _, _, position, _ ->
                                     run {
                                         val intent = Intent(applicationContext, FlightInfo::class.java)
                                         intent.putExtra("src", listOfFlights[position].src_port)
@@ -275,9 +272,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun getSavedType() = sharedPrefs.getInt(KEY_TYPE, 0)
 
-    private fun saveType(type: Int) = sharedPrefs.edit().putInt(KEY_TYPE, type).apply()
+    private fun saveType (type: Int) = sharedPrefs.edit().putInt(KEY_TYPE, type).apply()
 
     private fun getSavedDate() = sharedPrefs.getInt(KEY_DATE, 0)
 
-    private fun saveDate(date: Int) = sharedPrefs.edit().putInt(KEY_DATE, date).apply()
+    private fun saveDate (date: Int) = sharedPrefs.edit().putInt(KEY_DATE, date).apply()
 }

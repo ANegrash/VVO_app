@@ -9,10 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
-import java.util.*
 
 const val PREFS_NAME = "theme_prefs"
 const val KEY_THEME = "prefs.theme"
@@ -37,16 +35,16 @@ class AboutActivity : AppCompatActivity() {
         val devEmailTv = findViewById<TextView>(R.id.devEmailTv)
         val devLogo = findViewById<ImageView>(R.id.logoImg)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+        //Check, if android version can't use dark theme
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             themeView.visibility = View.VISIBLE
             underlineThemeView.visibility = View.VISIBLE
             switch.isChecked = getSavedTheme() == THEME_DARK
             switch.setOnCheckedChangeListener{ _, isChecked ->
-                if (isChecked) {
+                if (isChecked)
                     setTheme(AppCompatDelegate.MODE_NIGHT_YES, THEME_DARK)
-                } else {
+                else
                     setTheme(AppCompatDelegate.MODE_NIGHT_NO, THEME_LIGHT)
-                }
             }
         } else {
             themeView.visibility = View.GONE
@@ -96,12 +94,15 @@ class AboutActivity : AppCompatActivity() {
         }
     }
 
-    private fun setTheme(themeMode: Int, prefsMode: Int) {
+    private fun setTheme (
+        themeMode: Int,
+        prefsMode: Int
+    ) {
         AppCompatDelegate.setDefaultNightMode(themeMode)
         saveTheme(prefsMode)
     }
 
-    private fun saveTheme(theme: Int) = sharedPrefs.edit().putInt(KEY_THEME, theme).apply()
+    private fun saveTheme (theme: Int) = sharedPrefs.edit().putInt(KEY_THEME, theme).apply()
 
     private fun getSavedTheme() = sharedPrefs.getInt(KEY_THEME, 0)
 
