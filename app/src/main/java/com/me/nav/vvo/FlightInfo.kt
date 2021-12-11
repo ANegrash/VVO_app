@@ -9,6 +9,7 @@ class FlightInfo : AppCompatActivity() {
     override fun onCreate (savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_flight_info)
+
         val intent = intent
         val tvFlight = findViewById<TextView>(R.id.textview_flight)
         val tvFrom = findViewById<TextView>(R.id.textview_first_flight)
