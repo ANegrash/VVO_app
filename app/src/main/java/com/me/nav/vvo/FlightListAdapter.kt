@@ -36,7 +36,12 @@ class FlightListAdapter (
         val obj: FlightModel = jsonObject[position]
 
         time.text = getTrueTime(obj.date_and_time_calc)
-        number.text = obj.reys_num
+
+        if (obj.reys_num.toString().indexOf("[") > -1)
+            number.text = obj.reys_num.toString().split(",")[0].split("[")[1]
+        else
+            number.text = obj.reys_num.toString()
+
 
         if (obj.delay_code.isNotEmpty()) {
             status.setTextColor(Color.parseColor(warningColor))
