@@ -189,12 +189,18 @@ class MainActivity : AppCompatActivity() {
                                         val intent = Intent(applicationContext, FlightInfo::class.java)
                                         intent.putExtra("src", listOfFlights[position].src_port)
                                         intent.putExtra("dest", listOfFlights[position].dest_port)
-                                        intent.putExtra("num", listOfFlights[position].reys_num)
+                                        if (listOfFlights[position].reys_num.toString().indexOf("[") > -1)
+                                            intent.putExtra("num", listOfFlights[position].reys_num.toString().split(",")[0].split("[")[1])
+                                        else
+                                            intent.putExtra("num", listOfFlights[position].reys_num.toString())
                                         intent.putExtra("status", listOfFlights[position].status)
                                         intent.putExtra("checkin", listOfFlights[position].checkin_desk)
                                         intent.putExtra("gate", listOfFlights[position].stay_number)
                                         intent.putExtra("date", listOfFlights[position].date_and_time_calc)
-                                        intent.putExtra("airline", listOfFlights[position].aircompany)
+                                        if (listOfFlights[position].aircompany.toString().indexOf("[") > -1)
+                                            intent.putExtra("airline", listOfFlights[position].aircompany.toString().split(",")[0].split("[")[1])
+                                        else
+                                            intent.putExtra("airline", listOfFlights[position].aircompany.toString())
                                         intent.putExtra("vehicle", listOfFlights[position].typevs_code)
                                         if (type == DEPARTURE) {
                                             val regTime: String = getTrueTime(listOfFlights[position].checkin_begin) + " - " + getTrueTime(listOfFlights[position].checkin_end)
